@@ -92,12 +92,14 @@ class CoreTextView: UIScrollView {
         }
         
         var lineOrigins: [CGPoint] = Array<CGPoint>(repeatElement(.zero, count: lines.count))
+        let range: CFRange = CFRange(location: 0, length: 0)
+        CTFrameGetLineOrigins(ctFrame, range, &lineOrigins)
+        
         guard let lastLineOrigin = lineOrigins.last else {
             return .zero
         }
         
-        let range: CFRange = CFRange(location: 0, length: 0)
-        CTFrameGetLineOrigins(ctFrame, range, &lineOrigins)
+       
         
         let (leading, ascent, descent) = getTypographicBounds(line: lastLine)
         let lastLineHeight = leading + ascent + descent
